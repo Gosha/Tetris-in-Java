@@ -22,10 +22,12 @@ public class BoardTest {
 
         TetrisFrame frame = new TetrisFrame(board);
 
+        board.addObserver(tw);
+
         board.clear();
         board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
 //        board.addBlock(tm.getPoly(0));
-        System.out.println(tw.convertToText(board));
+        //System.out.println(tw.convertToText(board));
 
         while (true) {
             //board.addAction(Action.MOVE_DOWN);
@@ -56,6 +58,7 @@ public class BoardTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             boardController.step();
             frame.update(board);
             //System.out.println(tw.convertToText(board));

@@ -1,6 +1,9 @@
 package se.liu.ida.geoza435.TDDC69.lab2;
 
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Gosha
@@ -8,7 +11,7 @@ package se.liu.ida.geoza435.TDDC69.lab2;
  * Time: 16:28
  * A class used for viewing the board in text format
  */
-public class TextViewer {
+public class TextViewer implements Observer {
 
     private String colorToCharacter(SquareColor color) {
         if (color == null) {
@@ -69,5 +72,10 @@ public class TextViewer {
         }
 
         return outStr.toString();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println(convertToText((Board) o));
     }
 }

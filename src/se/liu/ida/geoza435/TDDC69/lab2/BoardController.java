@@ -55,18 +55,18 @@ public class BoardController {
             action = actionQueue.remove();
             switch (action) {
                 case MOVE_DOWN:
-                    board.fallingBlock.moveDown();
+                    board.moveFallingBlock(Board.Move.DOWN);
                     break;
                 case MOVE_LEFT:
                     if (board.fallingBlock != null && !CollisionDetector.collision(
                             board, board.fallingBlock, Action.MOVE_LEFT)) {
-                        board.fallingBlock.moveLeft();
+                        board.moveFallingBlock(Board.Move.LEFT);
                     }
                     break;
                 case MOVE_RIGHT:
                     if (board.fallingBlock != null && !CollisionDetector.collision(
                             board, board.fallingBlock, Action.MOVE_RIGHT)) {
-                        board.fallingBlock.moveRight();
+                        board.moveFallingBlock(Board.Move.RIGHT);
                     }
                     break;
             }

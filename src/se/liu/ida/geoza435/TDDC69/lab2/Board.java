@@ -1,5 +1,7 @@
 package se.liu.ida.geoza435.TDDC69.lab2;
 
+import java.util.Observable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Gosha
@@ -7,10 +9,12 @@ package se.liu.ida.geoza435.TDDC69.lab2;
  * Time: 16:24
  * Handles the board
  */
-public class Board {
+public class Board extends Observable {
     private final SquareColor[][] board;
     private final int width;
     private final int height;
+
+    public static enum Move {LEFT, DOWN, RIGHT}
 
     FallingBlock fallingBlock;
 
@@ -35,6 +39,8 @@ public class Board {
                 board[row][col] = null;
             }
         }
+        setChanged();
+        notifyObservers();
     }
 
     public int getWidth() {
@@ -47,14 +53,15 @@ public class Board {
 
     public void setSquare(int row, int col, SquareColor color) {
         board[row][col] = color;
+        setChanged();
+        notifyObservers();
     }
 
     public void addBlock(Poly poly) {
-        /*if (fallingBlock == null) {
-            fallingBlock = new FallingBlock(new SquarePos(getWidth() / 2, 0), poly);
-        }*/
         fallingBlock = null;
         fallingBlock = new FallingBlock(new SquarePos(getWidth() / 2, 1), poly);
+        setChanged();
+        notifyObservers();
     }
 
     public void stickFallingBlock() {
@@ -62,6 +69,24 @@ public class Board {
             board[fallingBlock.position.y + pos.y][fallingBlock.position.x + pos.x]
                     = fallingBlock.poly.color;
         }
+        setChanged();
+        notifyObservers();
+    }
+
+    public void moveFallingBlock(Move direction) {
+        switch (direction) {
+            case DOWN:
+                fallingBlock.moveDown();
+                break;
+            case LEFT:
+                fallingBlock.moveLeft();
+                break;
+            case RIGHT:
+                fallingBlock.moveRight();
+                break;
+        }
+        setChanged();
+        notifyObservers();
     }
 
 }
