@@ -18,6 +18,7 @@ public class BoardTest {
         TextViewer tw = new TextViewer();
         TetrominoMaker tm = new TetrominoMaker();
         Board board = new Board(10, 20);
+        BoardController boardController = new BoardController(board);
 
         TetrisFrame frame = new TetrisFrame(board);
 
@@ -30,24 +31,24 @@ public class BoardTest {
             //board.addAction(Action.MOVE_DOWN);
             switch (rand.nextInt(8)) {
                 case 0:
-                    board.addAction(Action.MOVE_RIGHT);
+                    boardController.addAction(Action.MOVE_RIGHT);
                     break;
                 case 1:
-                    board.addAction(Action.MOVE_RIGHT);
+                    boardController.addAction(Action.MOVE_RIGHT);
                 case 2:
-                    board.addAction(Action.MOVE_RIGHT);
+                    boardController.addAction(Action.MOVE_RIGHT);
                 case 3:
-                    board.addAction(Action.MOVE_RIGHT);
+                    boardController.addAction(Action.MOVE_RIGHT);
                     break;
                 case 4:
-                    board.addAction(Action.MOVE_LEFT);
+                    boardController.addAction(Action.MOVE_LEFT);
                     break;
                 case 5:
-                    board.addAction(Action.MOVE_LEFT);
+                    boardController.addAction(Action.MOVE_LEFT);
                 case 6:
-                    board.addAction(Action.MOVE_LEFT);
+                    boardController.addAction(Action.MOVE_LEFT);
                 case 7:
-                    board.addAction(Action.MOVE_LEFT);
+                    boardController.addAction(Action.MOVE_LEFT);
                     break;
             }
             try {
@@ -55,9 +56,9 @@ public class BoardTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            board.step();
+            boardController.step();
             frame.update(board);
-            System.out.println(tw.convertToText(board));
+            //System.out.println(tw.convertToText(board));
         }
 
     }

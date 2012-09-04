@@ -1,9 +1,5 @@
 package se.liu.ida.geoza435.TDDC69.lab2;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Gosha
@@ -16,8 +12,6 @@ public class Board {
     private final int width;
     private final int height;
 
-    private Queue<Action> actionQueue;
-
     FallingBlock fallingBlock;
 
     public Board() {
@@ -25,7 +19,6 @@ public class Board {
     }
 
     public Board(int width, int height) {
-        actionQueue = new LinkedList<Action>();
         this.width = width;
         this.height = height;
         this.board = new SquareColor[height][width];
@@ -56,19 +49,6 @@ public class Board {
         board[row][col] = color;
     }
 
-    public void randomize() {
-        SquareColor[] colors = SquareColor.values();
-        Random rand = new Random();
-
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-                if (rand.nextInt(5) == 0) {
-                    setSquare(row, col, colors[rand.nextInt(colors.length)]);
-                }
-            }
-        }
-    }
-
     public void addBlock(Poly poly) {
         /*if (fallingBlock == null) {
             fallingBlock = new FallingBlock(new SquarePos(getWidth() / 2, 0), poly);
@@ -77,53 +57,11 @@ public class Board {
         fallingBlock = new FallingBlock(new SquarePos(getWidth() / 2, 1), poly);
     }
 
-    public void step() {
-        if (fallingBlock == null) {
-            return;
-        }
-
-        if (CollisionDetector.collision(this, fallingBlock, Action.MOVE_DOWN)) {
-            stickFallingBlock();
-            fallingBlock = null;
-            TetrominoMaker tm = new TetrominoMaker();
-            Random rand = new Random();
-            addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
-            return;
-        } else {
-            fallingBlock.moveDown();
-        }
-
-        Action action;
-        while (!actionQueue.isEmpty()) {
-            action = actionQueue.remove();
-            switch (action) {
-                case MOVE_DOWN:
-                    fallingBlock.moveDown();
-                    break;
-                case MOVE_LEFT:
-                    if (fallingBlock != null && !CollisionDetector.collision(
-                            this, fallingBlock, Action.MOVE_LEFT)) {
-                        fallingBlock.moveLeft();
-                    }
-                    break;
-                case MOVE_RIGHT:
-                    if (fallingBlock != null && !CollisionDetector.collision(
-                            this, fallingBlock, Action.MOVE_RIGHT)) {
-                        fallingBlock.moveRight();
-                    }
-                    break;
-            }
-        }
-    }
-
-    private void stickFallingBlock() {
+    public void stickFallingBlock() {
         for (SquarePos pos : fallingBlock.poly.getBlocks()) {
             board[fallingBlock.position.y + pos.y][fallingBlock.position.x + pos.x]
                     = fallingBlock.poly.color;
         }
     }
 
-    public void addAction(Action action) {
-        actionQueue.add(action);
-    }
 }
