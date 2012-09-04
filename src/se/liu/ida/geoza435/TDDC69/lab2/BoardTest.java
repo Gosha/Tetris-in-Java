@@ -19,6 +19,8 @@ public class BoardTest {
         TetrominoMaker tm = new TetrominoMaker();
         Board board = new Board(15, 15);
 
+        TetrisFrame frame = new TetrisFrame(board);
+
         board.clear();
         board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
 //        board.addBlock(tm.getPoly(0));
@@ -54,6 +56,7 @@ public class BoardTest {
                 e.printStackTrace();
             }
             board.step();
+            frame.update(board);
             System.out.println(tw.convertToText(board));
         }
 
