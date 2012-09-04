@@ -17,7 +17,7 @@ public class BoardTest {
 
         TextViewer tw = new TextViewer();
         TetrominoMaker tm = new TetrominoMaker();
-        Board board = new Board(15, 15);
+        Board board = new Board(10, 20);
 
         TetrisFrame frame = new TetrisFrame(board);
 

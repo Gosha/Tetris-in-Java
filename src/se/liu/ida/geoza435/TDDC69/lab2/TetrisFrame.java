@@ -19,7 +19,7 @@ public class TetrisFrame extends JFrame {
         tw = new TextViewer();
         textArea = new JTextArea(board.getHeight() + 2, board.getWidth() + 2);
         textArea.setText(tw.convertToText(board));
-        textArea.setFont(new Font("Lucida Console", Font.PLAIN, 12));
+        textArea.setFont(new Font("Lucida Console", Font.PLAIN, 19));
         this.add(textArea);
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
