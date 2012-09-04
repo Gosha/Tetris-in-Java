@@ -46,7 +46,7 @@ public class TextViewer {
         for (int row = 0; row < board.getHeight(); row++) {
             outStr.append("|");
             for (int col = 0; col < board.getWidth(); col++) {
-                outStr.append(colorToCharacter(board.getSquare(row, col)));
+                outStr.append(colorToCharacter(board.getSquare(col, row)));
             }
             outStr.append("|\n");
         }

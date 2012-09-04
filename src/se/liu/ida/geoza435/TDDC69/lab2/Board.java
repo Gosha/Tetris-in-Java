@@ -32,7 +32,7 @@ public class Board {
         clear();
     }
 
-    public SquareColor getSquare(int row, int col) {
+    public SquareColor getSquare(int col, int row) {
         return board[row][col];
     }
 
@@ -82,14 +82,15 @@ public class Board {
             return;
         }
 
-        fallingBlock.moveDown();
-
-        if (willCollide(fallingBlock.poly, fallingBlock.position)) {
+        if (CollisionDetector.collision(this, fallingBlock, Action.MOVE_DOWN)) {
             stickFallingBlock();
             fallingBlock = null;
             TetrominoMaker tm = new TetrominoMaker();
             Random rand = new Random();
             addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
+            return;
+        } else {
+            fallingBlock.moveDown();
         }
 
         Action action;
@@ -100,25 +101,19 @@ public class Board {
                     fallingBlock.moveDown();
                     break;
                 case MOVE_LEFT:
-                    fallingBlock.moveLeft();
+                    if (fallingBlock != null && !CollisionDetector.collision(
+                            this, fallingBlock, Action.MOVE_LEFT)) {
+                        fallingBlock.moveLeft();
+                    }
                     break;
                 case MOVE_RIGHT:
-                    fallingBlock.moveRight();
+                    if (fallingBlock != null && !CollisionDetector.collision(
+                            this, fallingBlock, Action.MOVE_RIGHT)) {
+                        fallingBlock.moveRight();
+                    }
                     break;
             }
         }
-    }
-
-    private boolean willCollide(Poly poly, SquarePos posOnScreen) {
-        for (SquarePos pos : poly.getBlocks()) {
-            int relxPos = pos.x + posOnScreen.x;
-            int relyPos = pos.y + posOnScreen.y + 1;
-            if (relyPos > getHeight() - 1
-                    || board[relyPos][relxPos] != null) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void stickFallingBlock() {
