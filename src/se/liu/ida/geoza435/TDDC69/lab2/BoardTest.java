@@ -1,5 +1,7 @@
 package se.liu.ida.geoza435.TDDC69.lab2;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.util.Random;
 
 /**
@@ -15,51 +17,62 @@ public class BoardTest {
 
         Random rand = new Random();
 
-        TextViewer tw = new TextViewer();
-        TetrominoMaker tm = new TetrominoMaker();
-        Board board = new Board(10, 20);
-        BoardController boardController = new BoardController(board);
+        final TextViewer tw = new TextViewer();
+        final TetrominoMaker tm = new TetrominoMaker();
+        final Board board = new Board(10, 20);
+        final BoardController boardController = new BoardController(board);
 
-        TetrisFrame frame = new TetrisFrame(board);
+        final TetrisFrame frame = new TetrisFrame(board);
 
-        board.addObserver(tw);
+        //board.addObserver(tw);
 
         board.clear();
         board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
 //        board.addBlock(tm.getPoly(0));
         //System.out.println(tw.convertToText(board));
 
+        final javax.swing.Action doOneStep = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boardController.step();
+                frame.update(board);
+            }
+        };
+
+        final Timer clockTimer = new Timer(100, doOneStep);
+        clockTimer.setCoalesce(true);
+
+        clockTimer.start();
+
         while (true) {
             //board.addAction(Action.MOVE_DOWN);
             switch (rand.nextInt(8)) {
                 case 0:
-                    boardController.addAction(Action.MOVE_RIGHT);
-                    break;
+                    boardController.doAction(Action.MOVE_RIGHT);
                 case 1:
-                    boardController.addAction(Action.MOVE_RIGHT);
+                    boardController.doAction(Action.MOVE_RIGHT);
                 case 2:
-                    boardController.addAction(Action.MOVE_RIGHT);
+                    boardController.doAction(Action.MOVE_RIGHT);
                 case 3:
-                    boardController.addAction(Action.MOVE_RIGHT);
+                    boardController.doAction(Action.MOVE_RIGHT);
                     break;
                 case 4:
-                    boardController.addAction(Action.MOVE_LEFT);
-                    break;
+                    boardController.doAction(Action.MOVE_LEFT);
                 case 5:
-                    boardController.addAction(Action.MOVE_LEFT);
+                    boardController.doAction(Action.MOVE_LEFT);
                 case 6:
-                    boardController.addAction(Action.MOVE_LEFT);
+                    boardController.doAction(Action.MOVE_LEFT);
                 case 7:
-                    boardController.addAction(Action.MOVE_LEFT);
+                    boardController.doAction(Action.MOVE_LEFT);
                     break;
             }
             try {
-                Thread.sleep(500);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            boardController.step();
+            //boardController.step();
             frame.update(board);
             //System.out.println(tw.convertToText(board));
         }

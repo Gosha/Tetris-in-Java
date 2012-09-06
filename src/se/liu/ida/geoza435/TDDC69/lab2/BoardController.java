@@ -1,7 +1,5 @@
 package se.liu.ida.geoza435.TDDC69.lab2;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -14,11 +12,8 @@ import java.util.Random;
 public class BoardController {
     private Board board;
 
-    private Queue<Action> actionQueue;
-
     public BoardController(Board board) {
         this.board = board;
-        this.actionQueue = new LinkedList<Action>();
     }
 
     public void randomize() {
@@ -45,35 +40,30 @@ public class BoardController {
             TetrominoMaker tm = new TetrominoMaker();
             Random rand = new Random();
             board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
-            return;
         } else {
             board.fallingBlock.moveDown();
         }
+    }
 
-        Action action;
-        while (!actionQueue.isEmpty()) {
-            action = actionQueue.remove();
-            switch (action) {
-                case MOVE_DOWN:
-                    board.moveFallingBlock(Board.Move.DOWN);
-                    break;
-                case MOVE_LEFT:
-                    if (board.fallingBlock != null && !CollisionDetector.collision(
-                            board, board.fallingBlock, Action.MOVE_LEFT)) {
-                        board.moveFallingBlock(Board.Move.LEFT);
-                    }
-                    break;
-                case MOVE_RIGHT:
-                    if (board.fallingBlock != null && !CollisionDetector.collision(
-                            board, board.fallingBlock, Action.MOVE_RIGHT)) {
-                        board.moveFallingBlock(Board.Move.RIGHT);
-                    }
-                    break;
-            }
+    public void doAction(Action action) {
+
+        switch (action) {
+            case MOVE_DOWN:
+                board.moveFallingBlock(Board.Move.DOWN);
+                break;
+            case MOVE_LEFT:
+                if (board.fallingBlock != null && !CollisionDetector.collision(
+                        board, board.fallingBlock, Action.MOVE_LEFT)) {
+                    board.moveFallingBlock(Board.Move.LEFT);
+                }
+                break;
+            case MOVE_RIGHT:
+                if (board.fallingBlock != null && !CollisionDetector.collision(
+                        board, board.fallingBlock, Action.MOVE_RIGHT)) {
+                    board.moveFallingBlock(Board.Move.RIGHT);
+                }
+                break;
         }
     }
-
-    public void addAction(Action action) {
-        actionQueue.add(action);
-    }
 }
+
