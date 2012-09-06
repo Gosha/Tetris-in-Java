@@ -29,11 +29,11 @@ public class Board extends Observable {
         clear();
     }
 
-    public SquareColor getSquare(int col, int row) {
+    public synchronized SquareColor getSquare(int col, int row) {
         return board[row][col];
     }
 
-    public void clear() {
+    public synchronized void clear() {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 board[row][col] = null;
@@ -51,20 +51,20 @@ public class Board extends Observable {
         return height;
     }
 
-    public void setSquare(int row, int col, SquareColor color) {
+    public synchronized void setSquare(int row, int col, SquareColor color) {
         board[row][col] = color;
         setChanged();
         notifyObservers();
     }
 
-    public void addBlock(Poly poly) {
+    public synchronized void addBlock(Poly poly) {
         fallingBlock = null;
         fallingBlock = new FallingBlock(new SquarePos(getWidth() / 2, 1), poly);
         setChanged();
         notifyObservers();
     }
 
-    public void stickFallingBlock() {
+    public synchronized void stickFallingBlock() {
         for (SquarePos pos : fallingBlock.poly.getBlocks()) {
             board[fallingBlock.position.y + pos.y][fallingBlock.position.x + pos.x]
                     = fallingBlock.poly.color;
