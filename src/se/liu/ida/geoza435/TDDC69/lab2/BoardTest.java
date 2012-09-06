@@ -20,7 +20,7 @@ public class BoardTest {
         final TextViewer tw = new TextViewer();
         final TetrominoMaker tm = new TetrominoMaker();
         final Board board = new Board(10, 20);
-        final BoardController boardController = new BoardController(board);
+        final RandomController randomController = new RandomController(board);
 
         final TetrisFrame frame = new TetrisFrame(board);
 
@@ -34,7 +34,7 @@ public class BoardTest {
         final javax.swing.Action doOneStep = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boardController.step();
+                randomController.step();
                 frame.update(board);
             }
         };
@@ -45,34 +45,14 @@ public class BoardTest {
         clockTimer.start();
 
         while (true) {
-            //board.addAction(Action.MOVE_DOWN);
-            switch (rand.nextInt(8)) {
-                case 0:
-                    boardController.doAction(Action.MOVE_RIGHT);
-                case 1:
-                    boardController.doAction(Action.MOVE_RIGHT);
-                case 2:
-                    boardController.doAction(Action.MOVE_RIGHT);
-                case 3:
-                    boardController.doAction(Action.MOVE_RIGHT);
-                    break;
-                case 4:
-                    boardController.doAction(Action.MOVE_LEFT);
-                case 5:
-                    boardController.doAction(Action.MOVE_LEFT);
-                case 6:
-                    boardController.doAction(Action.MOVE_LEFT);
-                case 7:
-                    boardController.doAction(Action.MOVE_LEFT);
-                    break;
-            }
+            randomController.controlSome();
+
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            //boardController.step();
             frame.update(board);
             //System.out.println(tw.convertToText(board));
         }
