@@ -15,23 +15,23 @@ public class TextViewer implements Observer {
 
     private String colorToCharacter(SquareColor color) {
         if (color == null) {
-            return ".";
+            return " ";
         }
         switch (color) {
             case CYAN:
-                return ("*");
+                return ("◘");
             case RED:
-                return ("#");
+                return ("◙");
             case BLUE:
-                return ("%");
+                return ("█");
             case GREEN:
-                return ("¤");
+                return ("▓");
             case YELLOW:
-                return ("@");
+                return ("■");
             case PURPLE:
-                return ("+");
+                return ("▒");
             case ORANGE:
-                return ("=");
+                return ("░");
             default:
                 return ("?");
         }
@@ -40,24 +40,24 @@ public class TextViewer implements Observer {
 
     public String convertToText(Board board) {
         StringBuilder outStr = new StringBuilder();
-        outStr.append("+");
+        outStr.append("╔");
         for (int i = 0; i < board.getWidth(); i++) {
-            outStr.append("-");
+            outStr.append("═");
         }
-        outStr.append("+\n");
+        outStr.append("╗\n");
 
         for (int row = 0; row < board.getHeight(); row++) {
-            outStr.append("|");
+            outStr.append("╟");
             for (int col = 0; col < board.getWidth(); col++) {
                 outStr.append(colorToCharacter(board.getSquare(col, row)));
             }
-            outStr.append("|\n");
+            outStr.append("╢\n");
         }
-        outStr.append("+");
+        outStr.append("╚");
         for (int i = 0; i < board.getWidth(); i++) {
-            outStr.append("-");
+            outStr.append("═");
         }
-        outStr.append("+");
+        outStr.append("╝");
 
         if (board.fallingBlock != null) {
             for (SquarePos pos : board.fallingBlock.poly.getBlocks()) {
