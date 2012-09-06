@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,7 +17,10 @@ import java.awt.event.WindowEvent;
  */
 public class TetrisFrame extends JFrame {
     private JTextArea textArea;
-    private TextViewer tw;
+    final private TetrominoMaker tm = new TetrominoMaker();
+    final private TextViewer tw = new TextViewer();
+    Random rand = new Random();
+    private RandomController randomController;
 
     private void askQuit() {
         int answer = JOptionPane.showConfirmDialog
@@ -41,9 +45,8 @@ public class TetrisFrame extends JFrame {
         this.setJMenuBar(bar);
     }
 
-    public TetrisFrame(Board board) throws HeadlessException {
+    public TetrisFrame(final Board board) throws HeadlessException {
         super("Tetris!");
-        tw = new TextViewer();
         textArea = new JTextArea(board.getHeight() + 2, board.getWidth() + 2);
         textArea.setText(tw.convertToText(board));
         textArea.setFont(new Font("Lucida Console", Font.PLAIN, 19));
@@ -62,6 +65,36 @@ public class TetrisFrame extends JFrame {
         });
 
         this.setVisible(true);
+        randomController = new RandomController(board);
+
+        board.clear();
+        board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
+
+
+        final javax.swing.Action controlRandomly = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                randomController.controlSome();
+                update(board);
+            }
+        };
+
+        final javax.swing.Action doOneStep = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                randomController.step();
+                update(board);
+            }
+        };
+
+        final Timer stepTimer = new Timer(10, doOneStep);
+        stepTimer.setCoalesce(true);
+        stepTimer.start();
+
+        final Timer randomTimer = new Timer(10, controlRandomly);
+        randomTimer.setCoalesce(true);
+        randomTimer.start();
+
     }
 
     public void update(Board board) {
