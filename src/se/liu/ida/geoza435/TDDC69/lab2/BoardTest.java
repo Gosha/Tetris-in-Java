@@ -28,8 +28,6 @@ public class BoardTest {
 
         board.clear();
         board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
-//        board.addBlock(tm.getPoly(0));
-        //System.out.println(tw.convertToText(board));
 
         final javax.swing.Action doOneStep = new AbstractAction() {
             @Override
@@ -54,7 +52,6 @@ public class BoardTest {
             }
 
             frame.update(board);
-            //System.out.println(tw.convertToText(board));
         }
 
     }

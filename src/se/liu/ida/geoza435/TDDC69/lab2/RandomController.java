@@ -11,12 +11,13 @@ import java.util.Random;
  */
 public class RandomController extends BoardController {
     Random rand;
+
     public RandomController(Board board) {
         super(board);
         rand = new Random();
     }
 
-    public void controlSome () {
+    public void controlSome() {
         switch (rand.nextInt(8)) {
             case 0:
                 doAction(Action.MOVE_RIGHT);
