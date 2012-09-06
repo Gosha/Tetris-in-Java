@@ -56,7 +56,7 @@ public class TetrominoMaker {
         polyList.add(poly);
 
         // J
-        poly = new Poly(SquareColor.BLANK);
+        poly = new Poly(SquareColor.BLUE);
         poly.addSquare(new SquarePos(0, -1));
         poly.addSquare(new SquarePos(0, 0));
         poly.addSquare(new SquarePos(0, 1));
