@@ -11,6 +11,7 @@ import java.util.Random;
  */
 public class BoardController {
     private Board board;
+    Random rand = new Random();
 
     public BoardController(Board board) {
         this.board = board;
@@ -36,9 +37,12 @@ public class BoardController {
 
         if (CollisionDetector.collision(board, board.fallingBlock, Action.MOVE_DOWN)) {
             board.stickFallingBlock();
+            if (board.fallingBlock.position.y == 1) {
+                board.clear();
+            }
             board.fallingBlock = null;
             TetrominoMaker tm = new TetrominoMaker();
-            Random rand = new Random();
+
             board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
         } else {
             board.fallingBlock.moveDown();
