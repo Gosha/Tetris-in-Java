@@ -16,6 +16,8 @@ public class Poly {
 
     public SquareColor color;
 
+    enum Direction {LEFT, RIGHT}
+
     public Poly() {
         blocks = new ArrayList<SquarePos>();
     }
@@ -31,5 +33,30 @@ public class Poly {
 
     public List<SquarePos> getBlocks() {
         return blocks;
+    }
+
+    public void rotate(Direction dir) {
+        int boundingBox = getBoundingBoxSize();
+        for (SquarePos pos : blocks) {
+            SquarePos tmpPos = new SquarePos(pos.x, pos.y);
+            pos.y = tmpPos.x;
+            pos.x = tmpPos.y * -1 - 1 + boundingBox % 2;
+        }
+    }
+
+    private int getBoundingBoxSize() {
+        int maxY = blocks.get(0).y;
+        int minY = blocks.get(0).y;
+        int maxX = blocks.get(0).x;
+        int minX = blocks.get(0).x;
+        for (int i = 1; i < blocks.size(); i++) {
+            maxX = (blocks.get(i).x > maxX) ? blocks.get(i).x : maxX;
+            maxY = (blocks.get(i).y > maxY) ? blocks.get(i).y : maxY;
+            minY = (blocks.get(i).y < minY) ? blocks.get(i).y : minY;
+            minX = (blocks.get(i).x < minX) ? blocks.get(i).x : minX;
+        }
+        int width = Math.abs(minX - maxX) + 1;
+        int height = Math.abs(minY - maxY) + 1;
+        return (width > height) ? width : height;
     }
 }
