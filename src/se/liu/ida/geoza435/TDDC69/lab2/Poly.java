@@ -12,14 +12,17 @@ import java.util.List;
  * holds information about a polymino
  */
 public class Poly {
-    private List<SquarePos> blocks;
-
+    private List<ArrayList<SquarePos>> blocks;
+    private int currentRotation = 0; // 0 - 3, 0 is initial
     public SquareColor color;
 
     enum Direction {LEFT, RIGHT}
 
     public Poly() {
-        blocks = new ArrayList<SquarePos>();
+        blocks = new ArrayList<ArrayList<SquarePos>>();
+        for (int i = 0; i < 4; i++) {
+            blocks.add(new ArrayList<SquarePos>());
+        }
     }
 
     public Poly(SquareColor color) {
@@ -28,32 +31,45 @@ public class Poly {
     }
 
     public void addSquare(SquarePos block) {
-        blocks.add(block);
+        blocks.get(0).add(block);
     }
 
     public List<SquarePos> getBlocks() {
-        return blocks;
+        return blocks.get(currentRotation);
     }
 
     public void rotate(Direction dir) {
+        switch (dir) {
+            case RIGHT:
+                currentRotation = (currentRotation + 1) % 4;
+                break;
+            case LEFT:
+                currentRotation = (currentRotation - 1) % 4;
+                break;
+        }
+    }
+
+    public void createRotations() {
         int boundingBox = getBoundingBoxSize();
-        for (SquarePos pos : blocks) {
-            SquarePos tmpPos = new SquarePos(pos.x, pos.y);
-            pos.y = tmpPos.x;
-            pos.x = tmpPos.y * -1 - 1 + boundingBox % 2;
+        for (int i = 1; i < 4; i++) {
+            for (SquarePos pos : blocks.get(i - 1)) {
+                // Magic!
+                blocks.get(i).add(new SquarePos(pos.y * -1 - 1 + boundingBox % 2, pos.x));
+            }
         }
     }
 
     private int getBoundingBoxSize() {
-        int maxY = blocks.get(0).y;
-        int minY = blocks.get(0).y;
-        int maxX = blocks.get(0).x;
-        int minX = blocks.get(0).x;
-        for (int i = 1; i < blocks.size(); i++) {
-            maxX = Math.max(blocks.get(i).x, maxX);
-            maxY = Math.max(blocks.get(i).y, maxY);
-            minX = Math.min(blocks.get(i).x, minX);
-            minY = Math.min(blocks.get(i).y, minY);
+        List<SquarePos> currentBlocks = blocks.get(currentRotation);
+        int maxY = currentBlocks.get(0).y;
+        int minY = currentBlocks.get(0).y;
+        int maxX = currentBlocks.get(0).x;
+        int minX = currentBlocks.get(0).x;
+        for (int i = 1; i < currentBlocks.size(); i++) {
+            maxX = Math.max(currentBlocks.get(i).x, maxX);
+            maxY = Math.max(currentBlocks.get(i).y, maxY);
+            minX = Math.min(currentBlocks.get(i).x, minX);
+            minY = Math.min(currentBlocks.get(i).y, minY);
         }
         int width = Math.abs(minX - maxX) + 1;
         int height = Math.abs(minY - maxY) + 1;

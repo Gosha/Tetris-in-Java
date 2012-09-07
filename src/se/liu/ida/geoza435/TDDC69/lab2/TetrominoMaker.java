@@ -39,16 +39,16 @@ public class TetrominoMaker {
         poly.addSquare(new SquarePos(1, 0));
         polyList.add(poly);
 
-        // S
-        poly = new Poly(SquareColor.GREEN);
+        // Z
+        poly = new Poly(SquareColor.RED);
         poly.addSquare(new SquarePos(-1, -1));
         poly.addSquare(new SquarePos(0, -1));
         poly.addSquare(new SquarePos(0, 0));
         poly.addSquare(new SquarePos(1, 0));
         polyList.add(poly);
 
-        // Z
-        poly = new Poly(SquareColor.RED);
+        // S
+        poly = new Poly(SquareColor.GREEN);
         poly.addSquare(new SquarePos(-1, 0));
         poly.addSquare(new SquarePos(0, 0));
         poly.addSquare(new SquarePos(0, -1));
@@ -70,6 +70,10 @@ public class TetrominoMaker {
         poly.addSquare(new SquarePos(0, 1));
         poly.addSquare(new SquarePos(1, 1));
         polyList.add(poly);
+
+        for (Poly pol : polyList) {
+            pol.createRotations();
+        }
     }
 
     public int getNumberOfTypes() {
