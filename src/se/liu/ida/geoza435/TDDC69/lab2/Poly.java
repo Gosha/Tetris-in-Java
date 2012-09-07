@@ -50,10 +50,10 @@ public class Poly {
         int maxX = blocks.get(0).x;
         int minX = blocks.get(0).x;
         for (int i = 1; i < blocks.size(); i++) {
-            maxX = (blocks.get(i).x > maxX) ? blocks.get(i).x : maxX;
-            maxY = (blocks.get(i).y > maxY) ? blocks.get(i).y : maxY;
-            minY = (blocks.get(i).y < minY) ? blocks.get(i).y : minY;
-            minX = (blocks.get(i).x < minX) ? blocks.get(i).x : minX;
+            maxX = Math.max(blocks.get(i).x, maxX);
+            maxY = Math.max(blocks.get(i).y, maxY);
+            minX = Math.min(blocks.get(i).x, minX);
+            minY = Math.min(blocks.get(i).y, minY);
         }
         int width = Math.abs(minX - maxX) + 1;
         int height = Math.abs(minY - maxY) + 1;
