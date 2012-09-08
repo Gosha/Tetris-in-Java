@@ -60,7 +60,7 @@ public class TextViewer implements Observer {
         outStr.append("╝");
 
         if (board.fallingBlock != null) {
-            for (SquarePos pos : board.fallingBlock.poly.getBlocks()) {
+            for (SquarePos pos : board.fallingBlock.getBlocks()) {
                 int xPosOnScreen = board.fallingBlock.position.x + pos.x + 1;
                 int yPosOnScreen = board.fallingBlock.position.y + pos.y;
                 int location = xPosOnScreen + (3 + board.getWidth()) * (yPosOnScreen + 1);

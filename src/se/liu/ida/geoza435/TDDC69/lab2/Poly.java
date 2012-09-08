@@ -13,10 +13,7 @@ import java.util.List;
  */
 public class Poly {
     private List<ArrayList<SquarePos>> blocks;
-    private int currentRotation = 0; // 0 - 3, 0 is initial
     public SquareColor color;
-
-    enum Direction {LEFT, RIGHT}
 
     public Poly() {
         blocks = new ArrayList<ArrayList<SquarePos>>();
@@ -34,19 +31,8 @@ public class Poly {
         blocks.get(0).add(block);
     }
 
-    public List<SquarePos> getBlocks() {
-        return blocks.get(currentRotation);
-    }
-
-    public void rotate(Direction dir) {
-        switch (dir) {
-            case RIGHT:
-                currentRotation = (currentRotation + 1) % 4;
-                break;
-            case LEFT:
-                currentRotation = (currentRotation - 1) % 4;
-                break;
-        }
+    public List<SquarePos> getBlocks(int rotation) {
+        return blocks.get(rotation);
     }
 
     public void createRotations() {
@@ -60,7 +46,7 @@ public class Poly {
     }
 
     private int getBoundingBoxSize() {
-        List<SquarePos> currentBlocks = blocks.get(currentRotation);
+        List<SquarePos> currentBlocks = blocks.get(0);
         int maxY = currentBlocks.get(0).y;
         int minY = currentBlocks.get(0).y;
         int maxX = currentBlocks.get(0).x;

@@ -18,6 +18,9 @@ public class RandomController extends BoardController {
     }
 
     public void controlSome() {
+        if (board.fallingBlock == null) {
+            return;
+        }
         switch (rand.nextInt(8)) {
             case 0:
                 doAction(Action.MOVE_RIGHT);
@@ -35,6 +38,7 @@ public class RandomController extends BoardController {
             case 6:
                 doAction(Action.MOVE_LEFT);
             case 7:
+                doAction(Action.ROTATE_RIGHT);
                 doAction(Action.MOVE_LEFT);
                 break;
         }

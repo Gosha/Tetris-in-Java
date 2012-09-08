@@ -10,9 +10,7 @@ package se.liu.ida.geoza435.TDDC69.lab2;
 public enum Action {
     MOVE_DOWN,
     MOVE_LEFT,
-    MOVE_RIGHT
-    // ,
-    //ROTATE_RIGHT,
-    //ROTATE_LEFT
-
+    MOVE_RIGHT,
+    ROTATE_RIGHT,
+    ROTATE_LEFT
 }

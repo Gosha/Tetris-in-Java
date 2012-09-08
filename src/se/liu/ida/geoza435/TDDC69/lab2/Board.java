@@ -65,7 +65,7 @@ public class Board extends Observable {
     }
 
     public synchronized void stickFallingBlock() {
-        for (SquarePos pos : fallingBlock.poly.getBlocks()) {
+        for (SquarePos pos : fallingBlock.getBlocks()) {
             board[fallingBlock.position.y + pos.y][fallingBlock.position.x + pos.x]
                     = fallingBlock.poly.color;
         }

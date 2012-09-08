@@ -10,11 +10,13 @@ import java.util.Random;
  * Board logic and interface
  */
 public class BoardController {
-    private Board board;
+    protected Board board;
     Random rand = new Random();
+    TetrominoMaker tm;
 
     public BoardController(Board board) {
         this.board = board;
+        tm = new TetrominoMaker();
     }
 
     public void randomize() {
@@ -32,7 +34,7 @@ public class BoardController {
 
     public void step() {
         if (board.fallingBlock == null) {
-            return;
+            board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
         }
 
         if (CollisionDetector.collision(board, board.fallingBlock, Action.MOVE_DOWN)) {
@@ -41,9 +43,7 @@ public class BoardController {
                 board.clear();
             }
             board.fallingBlock = null;
-            TetrominoMaker tm = new TetrominoMaker();
 
-            board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
         } else {
             board.fallingBlock.moveDown();
         }
@@ -67,6 +67,20 @@ public class BoardController {
                     board.moveFallingBlock(Board.Move.RIGHT);
                 }
                 break;
+            case ROTATE_RIGHT:
+                if (board.fallingBlock != null && !CollisionDetector.collision(
+                        board, board.fallingBlock, Action.ROTATE_RIGHT)) {
+                    board.fallingBlock.rotate(FallingBlock.Direction.RIGHT);
+                }
+                break;
+            case ROTATE_LEFT:
+                if (board.fallingBlock != null && !CollisionDetector.collision(
+                        board, board.fallingBlock, Action.ROTATE_LEFT)) {
+                    board.fallingBlock.rotate(FallingBlock.Direction.LEFT);
+                }
+
+                break;
+
         }
     }
 }
