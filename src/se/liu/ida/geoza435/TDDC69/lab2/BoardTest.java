@@ -11,7 +11,7 @@ public class BoardTest {
 
     public static void main(String[] args) {
 
-        final Board board = new Board(10, 20);
+        final Board board = new Board(10, 22);
 
         new TetrisFrame(board);
 

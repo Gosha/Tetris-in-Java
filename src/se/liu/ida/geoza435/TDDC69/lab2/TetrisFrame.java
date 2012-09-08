@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,9 +16,8 @@ import java.util.Random;
  */
 public class TetrisFrame extends JFrame {
     private JTextArea textArea;
-    final private TetrominoMaker tm = new TetrominoMaker();
+    private GraphicalViewer graphicalTetris;
     final private TextViewer tw = new TextViewer();
-    Random rand = new Random();
     private RandomController randomController;
 
     private void askQuit() {
@@ -47,11 +45,14 @@ public class TetrisFrame extends JFrame {
 
     public TetrisFrame(final Board board) throws HeadlessException {
         super("Tetris!");
+        graphicalTetris = new GraphicalViewer(board);
+
         textArea = new JTextArea(board.getHeight() + 2, board.getWidth() + 2);
         textArea.setText(tw.convertToText(board));
         textArea.setFont(new Font("Lucida Console", Font.PLAIN, 19));
-        this.setLayout(new BorderLayout());
-        this.add(textArea);
+        this.setLayout(new FlowLayout());
+        //this.add(textArea);
+        this.add(graphicalTetris);
 
         createMenuBar();
 
@@ -66,10 +67,6 @@ public class TetrisFrame extends JFrame {
 
         this.setVisible(true);
         randomController = new RandomController(board);
-
-        board.clear();
-        board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
-
 
         final javax.swing.Action controlRandomly = new AbstractAction() {
             @Override
@@ -87,17 +84,20 @@ public class TetrisFrame extends JFrame {
             }
         };
 
-        final Timer stepTimer = new Timer(10, doOneStep);
+        final Timer stepTimer = new Timer(1000, doOneStep);
         stepTimer.setCoalesce(true);
+        stepTimer.setInitialDelay(0);
         stepTimer.start();
 
-        final Timer randomTimer = new Timer(10, controlRandomly);
+        final Timer randomTimer = new Timer(1000, controlRandomly);
         randomTimer.setCoalesce(true);
-        randomTimer.start();
+        //randomTimer.start();
 
+        addKeyListener(new KeyboardController(board, this));
     }
 
     public void update(Board board) {
         textArea.setText(tw.convertToText(board));
+        graphicalTetris.repaint();
     }
 }
