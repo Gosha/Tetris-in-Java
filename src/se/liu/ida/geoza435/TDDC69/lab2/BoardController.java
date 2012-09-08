@@ -53,7 +53,10 @@ public class BoardController {
 
         switch (action) {
             case MOVE_DOWN:
-                board.moveFallingBlock(Board.Move.DOWN);
+                if (board.fallingBlock != null && !CollisionDetector.collision(
+                        board, board.fallingBlock, Action.MOVE_DOWN)) {
+                    board.moveFallingBlock(Board.Move.DOWN);
+                }
                 break;
             case MOVE_LEFT:
                 if (board.fallingBlock != null && !CollisionDetector.collision(
