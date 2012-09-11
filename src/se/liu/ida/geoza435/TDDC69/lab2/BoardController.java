@@ -33,6 +33,11 @@ public class BoardController {
     }
 
     public void step() {
+        if(board.getState() == State.GAME_OVER) {
+            board.clear();
+            board.setState(State.PLAYING);
+        }
+
         if (board.fallingBlock == null) {
             board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
         }
@@ -40,7 +45,7 @@ public class BoardController {
         if (CollisionDetector.collision(board, board.fallingBlock, Action.MOVE_DOWN)) {
             board.stickFallingBlock();
             if (board.fallingBlock.position.y == 1) {
-                board.clear();
+                board.setState(State.GAME_OVER);
             }
             board.fallingBlock = null;
             board.removeFullRows();

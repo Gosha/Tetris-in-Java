@@ -10,6 +10,7 @@ import java.util.Observable;
  * Handles the board
  */
 public class Board extends Observable {
+    private State state;
     private final SquareColor[][] board;
     private final int width;
     private final int height;
@@ -27,6 +28,7 @@ public class Board extends Observable {
         this.height = height;
         this.board = new SquareColor[height][width];
         clear();
+        this.state = State.PLAYING;
     }
 
     public synchronized SquareColor getSquare(int col, int row) {
@@ -118,5 +120,13 @@ public class Board extends Observable {
         for (int i = 0; i < getWidth(); i++) {
             board[0][i] = null;
         }
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public State getState() {
+        return this.state;
     }
 }
