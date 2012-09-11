@@ -97,13 +97,13 @@ public class Board extends Observable {
         notifyObservers();
     }
 
-    public void removeFullRows () {
-        for (int i = getHeight()-1; i >= 0; i--) {
+    public void removeFullRows() {
+        for (int i = getHeight() - 1; i >= 0; i--) {
             for (int j = 0; j < getWidth(); j++) {
-                if(board[i][j] == null) {
+                if (board[i][j] == null) {
                     break;
                 }
-                if(j == getWidth()-1) {
+                if (j == getWidth() - 1) {
                     moveRowsDown(i);
                     i++;
                 }
@@ -113,10 +113,13 @@ public class Board extends Observable {
         notifyObservers();
     }
 
-    private void moveRowsDown (int to) {
+    private void moveRowsDown(int to) {
         for (int i = to; i > 0; i--) {
-            board[i] = board[i-1];
+            board[i] = board[i - 1];
         }
+
+        board[0] = new SquareColor[width];
+
         for (int i = 0; i < getWidth(); i++) {
             board[0][i] = null;
         }
