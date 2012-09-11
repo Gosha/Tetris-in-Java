@@ -43,6 +43,8 @@ public class BoardController {
                 board.clear();
             }
             board.fallingBlock = null;
+            board.
+                    removeFullRows();
 
         } else {
             board.moveFallingBlock(Board.Move.DOWN);
