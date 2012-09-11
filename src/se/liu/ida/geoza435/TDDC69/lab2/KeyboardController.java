@@ -11,11 +11,9 @@ import java.awt.event.KeyListener;
  * Handles keyboard events
  */
 public class KeyboardController extends BoardController implements KeyListener {
-    TetrisFrame frame;
 
-    public KeyboardController(Board board, TetrisFrame frame) {
+    public KeyboardController(Board board) {
         super(board);
-        this.frame = frame;
     }
 
     @Override

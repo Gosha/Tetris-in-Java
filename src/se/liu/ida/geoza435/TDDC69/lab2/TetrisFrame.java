@@ -73,7 +73,6 @@ public class TetrisFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 randomController.controlSome();
-                update(board);
             }
         };
 
@@ -81,7 +80,6 @@ public class TetrisFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 randomController.step();
-                update(board);
             }
         };
 
@@ -90,14 +88,10 @@ public class TetrisFrame extends JFrame {
         stepTimer.setInitialDelay(0);
         stepTimer.start();
 
-        final Timer randomTimer = new Timer(1000, controlRandomly);
+        final Timer randomTimer = new Timer(100, controlRandomly);
         randomTimer.setCoalesce(true);
         //randomTimer.start();
 
-        addKeyListener(new KeyboardController(board, this));
-    }
-
-    public void update(Board board) {
-        textArea.setText(tw.convertToText(board));
+        addKeyListener(new KeyboardController(board));
     }
 }
