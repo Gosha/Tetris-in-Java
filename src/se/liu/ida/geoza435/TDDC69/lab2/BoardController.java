@@ -33,7 +33,7 @@ public class BoardController {
     }
 
     public void step() {
-        if(board.getState() == State.GAME_OVER) {
+        if (board.getState() == State.GAME_OVER) {
             board.clear();
             board.setState(State.PLAYING);
         }
@@ -56,6 +56,9 @@ public class BoardController {
     }
 
     public void doAction(Action action) {
+        if (board.fallingBlock == null) {
+            return;
+        }
         switch (action) {
             case MOVE_DOWN:
                 if (board.fallingBlock != null && !CollisionDetector.collision(
@@ -88,10 +91,19 @@ public class BoardController {
                 }
                 break;
             case DROP:
-                while(board.fallingBlock != null && !CollisionDetector.collision(
+                while (board.fallingBlock != null && !CollisionDetector.collision(
                         board, board.fallingBlock, Action.MOVE_DOWN)) {
-                board.moveFallingBlock(Board.Move.DOWN);
-            }
+                    board.moveFallingBlock(Board.Move.DOWN);
+
+                }
+                break;
+            case HARD_DROP:
+                while (board.fallingBlock != null && !CollisionDetector.collision(
+                        board, board.fallingBlock, Action.MOVE_DOWN)) {
+                    board.moveFallingBlock(Board.Move.DOWN);
+                }
+                step();
+                break;
         }
     }
 }

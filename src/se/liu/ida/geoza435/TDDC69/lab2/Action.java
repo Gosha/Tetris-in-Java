@@ -13,5 +13,6 @@ public enum Action {
     MOVE_RIGHT,
     ROTATE_RIGHT,
     ROTATE_LEFT,
-    DROP
+    DROP,
+    HARD_DROP
 }

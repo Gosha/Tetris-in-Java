@@ -39,10 +39,12 @@ public class KeyboardController extends BoardController implements KeyListener {
                 doAction(Action.ROTATE_RIGHT);
                 break;
             case KeyEvent.VK_SPACE:
+                doAction(Action.HARD_DROP);
+                break;
+            case KeyEvent.VK_S:
                 doAction(Action.DROP);
                 break;
         }
-        frame.update(board);
     }
 
     @Override
