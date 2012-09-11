@@ -45,7 +45,7 @@ public class BoardController {
             board.fallingBlock = null;
 
         } else {
-            board.fallingBlock.moveDown();
+            board.moveFallingBlock(Board.Move.DOWN);
         }
     }
 
@@ -73,13 +73,13 @@ public class BoardController {
             case ROTATE_RIGHT:
                 if (board.fallingBlock != null && !CollisionDetector.collision(
                         board, board.fallingBlock, Action.ROTATE_RIGHT)) {
-                    board.fallingBlock.rotate(FallingBlock.Direction.RIGHT);
+                    board.moveFallingBlock(Board.Move.ROTATE_RIGHT);
                 }
                 break;
             case ROTATE_LEFT:
                 if (board.fallingBlock != null && !CollisionDetector.collision(
                         board, board.fallingBlock, Action.ROTATE_LEFT)) {
-                    board.fallingBlock.rotate(FallingBlock.Direction.LEFT);
+                    board.moveFallingBlock(Board.Move.ROTATE_LEFT);
                 }
 
                 break;

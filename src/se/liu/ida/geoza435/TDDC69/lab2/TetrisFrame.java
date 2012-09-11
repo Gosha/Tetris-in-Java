@@ -46,6 +46,7 @@ public class TetrisFrame extends JFrame {
     public TetrisFrame(final Board board) throws HeadlessException {
         super("Tetris!");
         graphicalTetris = new GraphicalViewer(board);
+        board.addObserver(graphicalTetris);
 
         textArea = new JTextArea(board.getHeight() + 2, board.getWidth() + 2);
         textArea.setText(tw.convertToText(board));
@@ -98,6 +99,5 @@ public class TetrisFrame extends JFrame {
 
     public void update(Board board) {
         textArea.setText(tw.convertToText(board));
-        graphicalTetris.repaint();
     }
 }

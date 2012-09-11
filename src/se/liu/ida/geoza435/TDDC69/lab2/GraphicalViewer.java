@@ -2,6 +2,8 @@ package se.liu.ida.geoza435.TDDC69.lab2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 //import java.util.EnumMap;
 
 /**
@@ -11,7 +13,7 @@ import java.awt.*;
  * Time: 16:27
  * Shows a graphic view of a {@code Board}.
  */
-public class GraphicalViewer extends JComponent {
+public class GraphicalViewer extends JComponent implements Observer {
     Board board;
     final static int SQUARE_SIZE = 20;
     //EnumMap<SquareColor, Color> squareColors;
@@ -114,5 +116,10 @@ public class GraphicalViewer extends JComponent {
             g2.draw(new Rectangle(position.x, position.y, SQUARE_SIZE, SQUARE_SIZE));
         }
 
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        this.repaint();
     }
 }

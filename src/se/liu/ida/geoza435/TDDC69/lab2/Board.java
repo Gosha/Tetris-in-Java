@@ -14,7 +14,7 @@ public class Board extends Observable {
     private final int width;
     private final int height;
 
-    public static enum Move {LEFT, DOWN, RIGHT}
+    public static enum Move {LEFT, DOWN, RIGHT, ROTATE_RIGHT, ROTATE_LEFT}
 
     FallingBlock fallingBlock;
 
@@ -83,6 +83,12 @@ public class Board extends Observable {
                 break;
             case RIGHT:
                 fallingBlock.moveRight();
+                break;
+            case ROTATE_RIGHT:
+                fallingBlock.rotate(FallingBlock.Direction.RIGHT);
+                break;
+            case ROTATE_LEFT:
+                fallingBlock.rotate(FallingBlock.Direction.LEFT);
                 break;
         }
         setChanged();
