@@ -103,6 +103,7 @@ public class Board extends Observable {
                 }
                 if(j == getWidth()-1) {
                     moveRowsDown(i);
+                    i++;
                 }
             }
         }
