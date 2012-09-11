@@ -38,6 +38,9 @@ public class KeyboardController extends BoardController implements KeyListener {
             case KeyEvent.VK_UP:
                 doAction(Action.ROTATE_RIGHT);
                 break;
+            case KeyEvent.VK_SPACE:
+                doAction(Action.DROP);
+                break;
         }
         frame.update(board);
     }

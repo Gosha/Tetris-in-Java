@@ -12,5 +12,6 @@ public enum Action {
     MOVE_LEFT,
     MOVE_RIGHT,
     ROTATE_RIGHT,
-    ROTATE_LEFT
+    ROTATE_LEFT,
+    DROP
 }

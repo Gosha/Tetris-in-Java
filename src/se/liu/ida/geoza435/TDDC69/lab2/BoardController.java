@@ -83,8 +83,12 @@ public class BoardController {
                         board, board.fallingBlock, Action.ROTATE_LEFT)) {
                     board.moveFallingBlock(Board.Move.ROTATE_LEFT);
                 }
-
                 break;
+            case DROP:
+                while(board.fallingBlock != null && !CollisionDetector.collision(
+                        board, board.fallingBlock, Action.MOVE_DOWN)) {
+                board.moveFallingBlock(Board.Move.DOWN);
+            }
 
         }
     }
