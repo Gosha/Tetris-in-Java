@@ -43,8 +43,7 @@ public class BoardController {
                 board.clear();
             }
             board.fallingBlock = null;
-            board.
-                    removeFullRows();
+            board.removeFullRows();
 
         } else {
             board.moveFallingBlock(Board.Move.DOWN);
@@ -52,7 +51,6 @@ public class BoardController {
     }
 
     public void doAction(Action action) {
-
         switch (action) {
             case MOVE_DOWN:
                 if (board.fallingBlock != null && !CollisionDetector.collision(
@@ -89,7 +87,6 @@ public class BoardController {
                         board, board.fallingBlock, Action.MOVE_DOWN)) {
                 board.moveFallingBlock(Board.Move.DOWN);
             }
-
         }
     }
 }

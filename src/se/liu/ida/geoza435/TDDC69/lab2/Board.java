@@ -107,6 +107,8 @@ public class Board extends Observable {
                 }
             }
         }
+        setChanged();
+        notifyObservers();
     }
 
     private void moveRowsDown (int to) {
