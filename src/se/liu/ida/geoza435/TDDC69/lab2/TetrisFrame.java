@@ -15,9 +15,7 @@ import java.awt.event.WindowEvent;
  * Shows a GUI of a Tetris Board
  */
 public class TetrisFrame extends JFrame {
-    private JTextArea textArea;
     private GraphicalViewer graphicalTetris;
-    final private TextViewer tw = new TextViewer();
     private RandomController randomController;
 
     private void askQuit() {
@@ -44,20 +42,11 @@ public class TetrisFrame extends JFrame {
     }
 
     public TetrisFrame(final Board board) throws HeadlessException {
+        //Frame initialization
         super("Tetris!");
-        graphicalTetris = new GraphicalViewer(board);
-        board.addObserver(graphicalTetris);
-
-        textArea = new JTextArea(board.getHeight() + 2, board.getWidth() + 2);
-        textArea.setText(tw.convertToText(board));
-        textArea.setFont(new Font("Lucida Console", Font.PLAIN, 19));
         this.setLayout(new FlowLayout());
-        //this.add(textArea);
-        this.add(graphicalTetris);
-
         createMenuBar();
 
-        this.pack();
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         this.addWindowListener(new WindowAdapter() {
@@ -66,7 +55,10 @@ public class TetrisFrame extends JFrame {
             }
         });
 
-        this.setVisible(true);
+        //Tetris initialization
+        graphicalTetris = new GraphicalViewer(board);
+        board.addObserver(graphicalTetris);
+
         randomController = new RandomController(board);
 
         final javax.swing.Action controlRandomly = new AbstractAction() {
@@ -93,5 +85,10 @@ public class TetrisFrame extends JFrame {
         //randomTimer.start();
 
         addKeyListener(new KeyboardController(board));
+
+        //Fire it up!
+        this.add(graphicalTetris);
+        this.pack();
+        this.setVisible(true);
     }
 }

@@ -20,7 +20,7 @@ public class Board extends Observable {
     FallingBlock fallingBlock;
 
     public Board() {
-        this(10, 20);
+        this(10, 22);
     }
 
     public Board(int width, int height) {
@@ -31,11 +31,11 @@ public class Board extends Observable {
         this.state = State.PLAYING;
     }
 
-    public synchronized SquareColor getSquare(int col, int row) {
+    public SquareColor getSquare(int row, int col) {
         return board[row][col];
     }
 
-    public synchronized void clear() {
+    public void clear() {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 board[row][col] = null;
@@ -53,20 +53,20 @@ public class Board extends Observable {
         return height;
     }
 
-    public synchronized void setSquare(int row, int col, SquareColor color) {
+    public void setSquare(int row, int col, SquareColor color) {
         board[row][col] = color;
         setChanged();
         notifyObservers();
     }
 
-    public synchronized void addBlock(Poly poly) {
+    public void addFallingBlock(Poly poly) {
         fallingBlock = null;
         fallingBlock = new FallingBlock(new SquarePos(getWidth() / 2, 1), poly);
         setChanged();
         notifyObservers();
     }
 
-    public synchronized void stickFallingBlock() {
+    public void stickFallingBlock() {
         for (SquarePos pos : fallingBlock.getBlocks()) {
             board[fallingBlock.position.y + pos.y][fallingBlock.position.x + pos.x]
                     = fallingBlock.poly.color;
@@ -98,14 +98,14 @@ public class Board extends Observable {
     }
 
     public void removeFullRows() {
-        for (int i = getHeight() - 1; i >= 0; i--) {
-            for (int j = 0; j < getWidth(); j++) {
-                if (board[i][j] == null) {
+        for (int row = getHeight() - 1; row >= 0; row--) {
+            for (int col = 0; col < getWidth(); col++) {
+                if (board[row][col] == null) {
                     break;
                 }
-                if (j == getWidth() - 1) {
-                    moveRowsDown(i);
-                    i++;
+                if (col == getWidth() - 1) {
+                    moveRowsDown(row);
+                    row++;
                 }
             }
         }
@@ -114,14 +114,14 @@ public class Board extends Observable {
     }
 
     private void moveRowsDown(int to) {
-        for (int i = to; i > 0; i--) {
-            board[i] = board[i - 1];
+        for (int row = to; row > 0; row--) {
+            board[row] = board[row - 1];
         }
 
         board[0] = new SquareColor[width];
 
-        for (int i = 0; i < getWidth(); i++) {
-            board[0][i] = null;
+        for (int col = 0; col < getWidth(); col++) {
+            board[0][col] = null;
         }
     }
 

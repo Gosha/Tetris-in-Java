@@ -11,7 +11,7 @@ import java.util.List;
  * Makes a list of tetrominos and handles them out
  */
 public class TetrominoMaker {
-    private List<Poly> polyList; //final?
+    private List<Poly> polyList;
 
     public TetrominoMaker() {
         polyList = new ArrayList<Poly>();

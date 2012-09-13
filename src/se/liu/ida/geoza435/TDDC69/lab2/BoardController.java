@@ -19,6 +19,7 @@ public class BoardController {
         tm = new TetrominoMaker();
     }
 
+    //Used in early development.
     public void randomize() {
         SquareColor[] colors = SquareColor.values();
         Random rand = new Random();
@@ -39,7 +40,7 @@ public class BoardController {
         }
 
         if (board.fallingBlock == null) {
-            board.addBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
+            board.addFallingBlock(tm.getPoly(rand.nextInt(tm.getNumberOfTypes())));
         }
 
         if (CollisionDetector.collision(board, board.fallingBlock, Action.MOVE_DOWN)) {

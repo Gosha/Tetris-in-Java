@@ -12,6 +12,22 @@ import java.util.List;
 public class CollisionDetector {
     private static enum Side {LEFT, RIGHT}
 
+    public static boolean collision(Board board, FallingBlock fallingBlock, Action action) {
+        switch (action) {
+            case MOVE_LEFT:
+                return checkSide(board, fallingBlock, Side.LEFT);
+            case MOVE_RIGHT:
+                return checkSide(board, fallingBlock, Side.RIGHT);
+            case MOVE_DOWN:
+                return checkDown(board, fallingBlock);
+            case ROTATE_RIGHT:
+                return checkRotation(board, fallingBlock, Side.RIGHT);
+            case ROTATE_LEFT:
+                return checkRotation(board, fallingBlock, Side.LEFT);
+        }
+        return false;
+    }
+
     private static boolean checkSide(Board board, FallingBlock fallingBlock, Side side) {
         switch (side) {
             case LEFT:
@@ -33,7 +49,7 @@ public class CollisionDetector {
             if (relyPos > board.getHeight() - 1
                     || relxPos > board.getWidth() - 1
                     || relxPos < 0
-                    || board.getSquare(relxPos, relyPos) != null) {
+                    || board.getSquare(relyPos, relxPos) != null) {
                 return true;
             }
         }
@@ -46,22 +62,6 @@ public class CollisionDetector {
                 return checkRelative(board, fallingBlock.position, fallingBlock.getNextRotation(FallingBlock.Direction.RIGHT), 0, 0);
             case LEFT:
                 return checkRelative(board, fallingBlock.position, fallingBlock.getNextRotation(FallingBlock.Direction.LEFT), 0, 0);
-        }
-        return false;
-    }
-
-    public static boolean collision(Board board, FallingBlock fallingBlock, Action action) {
-        switch (action) {
-            case MOVE_LEFT:
-                return checkSide(board, fallingBlock, Side.LEFT);
-            case MOVE_RIGHT:
-                return checkSide(board, fallingBlock, Side.RIGHT);
-            case MOVE_DOWN:
-                return checkDown(board, fallingBlock);
-            case ROTATE_RIGHT:
-                return checkRotation(board, fallingBlock, Side.RIGHT);
-            case ROTATE_LEFT:
-                return checkRotation(board, fallingBlock, Side.LEFT);
         }
         return false;
     }

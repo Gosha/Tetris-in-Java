@@ -16,6 +16,7 @@ import java.util.Observer;
 public class GraphicalViewer extends JComponent implements Observer {
     Board board;
     final static int SQUARE_SIZE = 20;
+    private final static int HIDDEN_LINES = 2;
     //EnumMap<SquareColor, Color> squareColors;
 
     public Color getSquareColor(SquareColor sColor) {
@@ -28,7 +29,7 @@ public class GraphicalViewer extends JComponent implements Observer {
             case RED:
                 return new Color(124, 82, 83);
             case BLUE:
-                return new Color(109, 93, 109);
+                return new Color(79, 93, 179);
             case GREEN:
                 return new Color(76, 109, 92);
             case YELLOW:
@@ -57,18 +58,18 @@ public class GraphicalViewer extends JComponent implements Observer {
         Graphics2D g2 = (Graphics2D) g;
         g2.fill(new Rectangle(getPreferredSize()));
         drawBackground(g2, board);
-        for (int i = 2; i < board.getHeight(); i++) {
-            for (int j = 0; j < board.getWidth(); j++) {
-                if (board.getSquare(j, i) != null)
+        for (int row = HIDDEN_LINES; row < board.getHeight(); row++) {
+            for (int col = 0; col < board.getWidth(); col++) {
+                if (board.getSquare(row, col) != null)
                     paintBlock(g2,
-                            new Point(j * SQUARE_SIZE, (i - 2) * SQUARE_SIZE),
-                            getSquareColor(board.getSquare(j, i)));
+                            new Point(col * SQUARE_SIZE, (row - HIDDEN_LINES) * SQUARE_SIZE),
+                            getSquareColor(board.getSquare(row, col)));
             }
         }
         if (board.fallingBlock != null) {
             for (SquarePos pos : board.fallingBlock.getBlocks()) {
                 int xPos = pos.x * SQUARE_SIZE + SQUARE_SIZE * board.fallingBlock.position.x;
-                int yPos = pos.y * SQUARE_SIZE + SQUARE_SIZE * (board.fallingBlock.position.y - 2);
+                int yPos = pos.y * SQUARE_SIZE + SQUARE_SIZE * (board.fallingBlock.position.y - HIDDEN_LINES);
                 paintBlock(g2,
                         new Point(xPos, yPos),
                         getSquareColor(board.fallingBlock.poly.color));
@@ -93,10 +94,10 @@ public class GraphicalViewer extends JComponent implements Observer {
 
         g2.fill(new Rectangle(getPreferredSize()));
 
-        for (int i = 0; i < board.getHeight() - 2; i++) {
-            for (int j = 0; j < board.getWidth(); j++) {
+        for (int row = 0; row < board.getHeight() - HIDDEN_LINES; row++) {
+            for (int col = 0; col < board.getWidth(); col++) {
                 g2.setColor(getSquareColor(null).brighter());
-                g2.draw(new Rectangle(j * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE));
+                g2.draw(new Rectangle(col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE));
             }
         }
     }

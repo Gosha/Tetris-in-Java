@@ -9,7 +9,7 @@ import java.util.List;
  * User: Gosha
  * Date: 2012-09-01
  * Time: 17:50
- * holds information about a polymino
+ * Holds information about a polymino
  */
 public class Poly {
     private List<ArrayList<SquarePos>> blocks;
@@ -40,7 +40,7 @@ public class Poly {
         for (int i = 1; i < 4; i++) {
             for (SquarePos pos : blocks.get(i - 1)) {
                 // Magic!
-                blocks.get(i).add(new SquarePos(pos.y * -1 - 1 + boundingBox % 2, pos.x));
+                blocks.get(i).add(new SquarePos((pos.y * -1) - 1 + boundingBox % 2, pos.x));
             }
         }
     }
